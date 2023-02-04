@@ -112,6 +112,12 @@ export default class Logger {
         clearInterval(interval)
       },
       pause: ()=>{
+        process.stdout.cursorTo(cursorPos.col-1,cursorPos.row-2)
+        process.stdout.clearLine(1)
+        clearInterval(interval)
+      },
+      /** Pause for when pausing an operation, can be resumed with resume() - Not designed to work with more logs; for that, use regular pause() */
+      _pause: ()=>{
         let oldChar = char;
         char='⏸︎'
         updateStatus()
