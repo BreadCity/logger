@@ -6,7 +6,8 @@
     "noEmitOnError": true,
     "lib": ["es2017"],                            
     "strict": true,  
-    "esModuleInterop": false
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["./src/**/*.ts"]
 }
