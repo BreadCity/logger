@@ -1,0 +1,33 @@
+{
+  "name": "@exponentialworkload/logger",
+  "version": "1.0.2",
+  "description": "Simple JS Logger for myself",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rollup -c --bundleConfigAsCjs",
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "Exponential-Workload",
+  "license": "MIT",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/node": "^18.11.18",
+    "@types/prompts": "^2.4.2",
+    "rollup": "^3.13.0",
+    "rollup-plugin-dts": "^5.1.1",
+    "tslib": "^2.5.0",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "get-cursor-position": "^2.0.0",
+    "prompts": "^2.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BreadCity/logger.git"
+  },
+  "homepage": "https://github.com/BreadCity/logger"
+}
