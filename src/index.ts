@@ -89,9 +89,11 @@ export default class Logger {
     const rerenderMessage = ()=>{
       i=i+1;
       if (i >= pendingOperationSymbols.length) i=0
+      const cursorPos2 = getCursorPos()
       process.stdout.cursorTo(cursorPos.col-1,(cursorPos.row-2+lines-startingLines))
       process.stdout.clearLine(1)
       writeMessage()
+      process.stdout.cursorTo(cursorPos2.col-1,cursorPos2.row-1)
     }
     rerenderMessage()
     const interval = setInterval(rerenderMessage,50).unref()
