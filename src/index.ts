@@ -87,7 +87,7 @@ export default class Logger {
       writeMessage()
     }
     rerenderMessage()
-    setInterval(rerenderMessage,50).unref()
+    const interval = setInterval(rerenderMessage,50).unref()
     const updateStatus = (newMsg?:string, newPostMsg?:string)=>{
       msg=newMsg ?? msg;
       postmsg=postmsg??newPostMsg
@@ -103,10 +103,12 @@ export default class Logger {
         }
         char=success?'✔':'✖'
         updateStatus(newMsg,newPostMsg)
+        clearInterval(interval)
       },
       done_removeLog: ()=>{
         process.stdout.cursorTo(cursorPos.col-1,cursorPos.row-2)
         process.stdout.clearLine(1)
+        clearInterval(interval)
       },
     }
   }
