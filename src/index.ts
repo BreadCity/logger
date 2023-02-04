@@ -75,7 +75,7 @@ export default class Logger {
     lines++;
   }
   status(msg: string, postmsg?: string) {
-    const cursorPos = getCursorPos()
+    let cursorPos = getCursorPos()
     let i=0;
     let startingLines = lines;
     let char:string;
@@ -96,7 +96,7 @@ export default class Logger {
       process.stdout.cursorTo(cursorPos2.col-1,cursorPos2.row-1)
     }
     rerenderMessage()
-    const interval = setInterval(rerenderMessage,50).unref()
+    let interval = setInterval(rerenderMessage,50).unref()
     const updateStatus = (newMsg?:string, newPostMsg?:string)=>{
       msg=newMsg ?? msg;
       postmsg=postmsg??newPostMsg
@@ -119,6 +119,18 @@ export default class Logger {
         process.stdout.clearLine(1)
         clearInterval(interval)
       },
+      pause: ()=>{
+        let oldChar = char;
+        char='⏸︎'
+        updateStatus()
+        clearInterval(interval)
+        char=oldChar;
+      },
+      resume: ()=>{
+        interval = setInterval(rerenderMessage,50).unref()
+        cursorPos = getCursorPos()
+        updateStatus();
+      }
     }
   }
   constructor(name?: string | undefined) {
