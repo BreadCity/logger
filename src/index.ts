@@ -19,7 +19,6 @@ const pendingOperationSymbols = [
   '◝',
   '◠'
 ]
-let lines = 0;
 export default class Logger {
   static format(status: string, colour: RGB, loggerName: string | undefined, prestatus: string | undefined, post: boolean, bold: boolean = true) {
     return (loggerName?(chalk.grey(`${loggerName} › `)):'') + (bold?chalk.bold:chalk).rgb(colour.r,colour.g,colour.b)(status) + (prestatus ? (chalk.bold(' ' + prestatus) + ((this.postGuillemet && post) ? chalk.grey(' ›') : '')) : '')
@@ -32,7 +31,6 @@ export default class Logger {
       g: 255,
       b: 122,
     },this.loggerName,msg, !!postmsg,false),postmsg??'');
-    lines++;
   }
   question(msg: string,postmsg?:string) {
     console.log(Logger.format('?', {
@@ -40,7 +38,6 @@ export default class Logger {
       g: 122,
       b: 255,
     },this.loggerName,msg, !!postmsg),postmsg??'');
-    lines++;
   }
   info(msg: string,postmsg?:string) {
     console.log(Logger.format('i', {
@@ -48,7 +45,6 @@ export default class Logger {
       g: 122,
       b: 255,
     },this.loggerName,msg, !!postmsg),postmsg??'');
-    lines++;
   }
   warn(msg: string,postmsg?:string) {
     console.log(Logger.format('⚠', {
@@ -56,7 +52,6 @@ export default class Logger {
       g: 255,
       b: 122,
     },this.loggerName,msg, !!postmsg),postmsg??'');
-    lines++;
   }
   error(msg: string,postmsg?:string) {
     console.log(Logger.format('✖', {
@@ -64,7 +59,6 @@ export default class Logger {
       g: 122,
       b: 122,
     },this.loggerName,msg, !!postmsg),postmsg??'');
-    lines++;
   }
   log(msg: string,postmsg?:string) {
     console.log(Logger.format('🗎', {
@@ -72,12 +66,10 @@ export default class Logger {
       g: 180,
       b: 180,
     },this.loggerName,msg, !!postmsg),postmsg??'');
-    lines++;
   }
   status(msg: string, postmsg?: string) {
     let cursorPos = getCursorPos()
     let i=0;
-    let startingLines = lines;
     let char:string;
     let rgb: RGB = {
       r: 122,
@@ -90,7 +82,7 @@ export default class Logger {
       i=i+1;
       if (i >= pendingOperationSymbols.length) i=0
       const cursorPos2 = getCursorPos()
-      process.stdout.cursorTo(cursorPos.col-1,(cursorPos.row-2+lines-startingLines))
+      process.stdout.cursorTo(cursorPos.col-1,cursorPos.row-2)
       process.stdout.clearLine(1)
       writeMessage()
       process.stdout.cursorTo(cursorPos2.col-1,cursorPos2.row-1)
@@ -127,6 +119,7 @@ export default class Logger {
         char=oldChar;
       },
       resume: ()=>{
+        process.stdout.moveCursor(0,1)
         interval = setInterval(rerenderMessage,50).unref()
         cursorPos = getCursorPos()
         updateStatus();
